@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
 
 app.use('/api/v1/person', personRouter);
 
-const port = 3000;
+const port = 3001;
 // app.get('/', (req, res) => {
 //   res.send('Hello World!');
 // });
