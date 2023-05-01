@@ -2,7 +2,7 @@ const db = require('../db/db');
 
 class PersonDAO {
   async createPerson(firstName, lastName) {
-    const [id] = await db('person')
+    const [id] = await db('persons')
       .insert({
         first_name: firstName,
         last_name: lastName,
@@ -12,7 +12,7 @@ class PersonDAO {
   }
 
   async getPerson(id) {
-    const [person] = await db('person')
+    const [person] = await db('persons')
       .select('*')
       .where({ id });
 
@@ -20,7 +20,7 @@ class PersonDAO {
   }
 
   async getPeople() {
-    const people = await db('person')
+    const people = await db('persons')
       .select('*')
     return people;
   }
