@@ -1,10 +1,6 @@
 exports.seed = async function(knex) {
   // Deletes ALL existing entries
-  await knex('program_music').del()
-  await knex('program_seasons').del()
-  await knex('musics').del()
-  await knex('programs').del()
-  await knex('seasons').del()
+
   
   await knex('musics').insert([
     {
@@ -26,6 +22,27 @@ exports.seed = async function(knex) {
   await knex('program_music').insert([
     {
       program_id: 1,
+      music_id: 1,
+    },
+  ]);
+
+  await knex('program_skater').insert([
+    {
+      program_id: 1,
+      skater_id: 1,
+    },
+  ]);
+
+  await knex('program_choreographer').insert([
+    {
+      program_id: 1,
+      choreographer_id: 1,
+    },
+  ]);
+
+  await knex('artist_music').insert([
+    {
+      artist_id: 1,
       music_id: 1,
     },
   ]);

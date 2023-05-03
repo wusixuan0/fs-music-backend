@@ -1,5 +1,14 @@
 exports.seed = async function(knex) {
   // Deletes ALL existing entries
+  await knex('program_seasons').del()
+  await knex('artist_music').del()
+  await knex('program_choreographer').del()
+  await knex('program_skater').del()
+  await knex('program_music').del()
+  await knex('musics').del()
+  await knex('programs').del()
+  await knex('seasons').del()
+  
   await knex('choreographers').del();
   await knex('artists').del();
   await knex('skaters').del();
