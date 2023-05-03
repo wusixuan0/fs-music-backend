@@ -1,5 +1,6 @@
 const express = require('express');
 const personRouter = require('./routes/person');
+const programRouter = require('./routes/program');
 const cors = require("cors");
 
 const app = express();
@@ -17,10 +18,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => {
-  res.redirect("/api/v1/person");
-});
-
+app.use('/api/v1/program', programRouter);
 app.use('/api/v1/person', personRouter);
 
 const port = 3001;
