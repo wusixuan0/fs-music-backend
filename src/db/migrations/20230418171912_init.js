@@ -3,8 +3,8 @@ exports.up = function(knex) {
     .createTable('persons', function(table) {
       table.increments('id').primary();
       table.string('first_name').notNullable();
-      table.string('family_name').notNullable();
-      table.string('country').notNullable();
+      table.string('family_name'); // nullable -> Rihanna
+      table.string('country');
       table.string('native_name', 100).collate('utf8mb4_unicode_ci');
 
       table.string('link');
