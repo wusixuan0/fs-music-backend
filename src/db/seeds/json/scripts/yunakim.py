@@ -79,15 +79,19 @@ for row in program_table_yuna.find_all(['tr', 'th'])[1:]:
         datas[index]["season"].append(season)
         continue
       elif name == "El Tango de Roxanne":
-        copy = datas[index]
-        copy["season"] = [season]
-        copy["program_type"] = program_type
-        datas.append(copy)
-        continue
+        copy = datas[titles[name]]
+        data = {
+          "season": seasons,
+          "program_title": name,
+          "musics": copy["musics"],      
+          "choreo": copy["choreo"],
+          "program_type": program_type
+        }
 
-    source, performed_by, composer, choreo = find_program_info(text)
-    additional_info = {}
-    
+        datas.append(data)
+        continue
+        
+    source, performed_by, composer, choreo = find_program_info(text)   
     artists = {}
     if composer:
       artists["composer"] = composer
@@ -98,8 +102,11 @@ for row in program_table_yuna.find_all(['tr', 'th'])[1:]:
     seasons.append(season)
 
     musics = [{"title": name, "artists": artists}]
+    additional_info = {}
     if source:
       musics[0]["additional_info"] = {"from": source} 
+    
+
     data = {
       "season": seasons,
       "program_title": name,

@@ -1,18 +1,39 @@
 const data = require('./json/yunakim.json');
 function parseName(name) {
   const nameParts = name.split(" ");
-  const firstName = nameParts[0];
-  const familyName = nameParts.slice(1).join(" ");
-  return { firstName, familyName };
+  const first_name = nameParts[0];
+  const family_name = nameParts.slice(1).join(" ");
+  return { first_name, family_name };
 }
-async function getChoreoId(knex, firstName, familyName) {
+
+async function getPersonId(knex, name) {
+  const result = await knex('persons')
+    .select('id')
+    .where({
+      'full_name': name,
+    })
+    .first();
+  return result ? result.id : null;
+}
+
+async function getChoreoId(knex, name) {
   const result = await knex('choreographers')
     .join('persons', 'persons.id', '=', 'choreographers.person_id')
     .where({
-      'persons.first_name': firstName,
-      'persons.family_name': familyName
+      'persons.full_name': name,
     })
     .select('choreographers.id')
+    .first();
+  return result ? result.id : null;
+}
+
+async function getArtistId(knex, name) {
+  const result = await knex('artists')
+    .join('persons', 'persons.id', '=', 'artists.person_id')
+    .where({
+      'persons.full_name': name,
+    })
+    .select('artists.id')
     .first();
   return result ? result.id : null;
 }
@@ -44,6 +65,7 @@ exports.seed = async function(knex) {
 
   // manually seed person and skater row
   const person = {
+    full_name: 'Yuna Kim',
     first_name: 'Yuna', 
     family_name: 'Kim',
     country: 'South Korea',
@@ -83,7 +105,15 @@ exports.seed = async function(knex) {
     const musics = program['musics'][0];
     
     // TODO 2: search if music exist, if not then create music
-    // TODO 4
+    // TODO 3: add search artist, if not then create
+
+    // TODO 4 CHECK if person table exit, dont duplicate, refactor logic of getChoreoId function
+
+    // both exist -> skip to program_choreographer
+    // person id doesn't exist and choreo doesn't exist
+    // person id exist but choreo doesn't exist, like yuna
+
+
     const music = {
       title: musics.title,
       additional_info: musics.additional_info
@@ -98,18 +128,29 @@ exports.seed = async function(knex) {
       },
     ]);
 
-    // TODO 3: add search artist, if not then create
-    // TODO 4
+
     if (musics.artists) {
       for (const role in musics.artists) {
         name_list = musics.artists[role].split(", ");
         for (const name of name_list) {
-          const { firstName, familyName } = parseName(name)
+          const { first_name, family_name } = parseName(name)
 
-          const [{ id: artist_person_id }] = await knex('persons').insert({ first_name: firstName, family_name: familyName}).returning('id');
+          let person_id = await getPersonId(knex, name);
+          let artist_id = await getArtistId(knex, name);
 
-          const [{ id: artist_id }] = await knex('artists').insert({ person_id: artist_person_id}).returning('id');
-          console.log(`Created ${role} ${ firstName } ${ familyName } with person id ${artist_person_id }, artist id ${artist_id }` ); 
+          if (!person_id) {
+            const [{ id: artist_person_id }] = await knex('persons').insert({ full_name: name, first_name: first_name, family_name: family_name}).returning('id');
+            person_id = artist_person_id
+            console.log(`Created ${ name } with person id ${ artist_person_id }` ); 
+          }
+
+          if (!artist_id) {
+            const [{ id: artist_new_id }] = await knex('artists').insert({ person_id: person_id}).returning('id');
+
+            artist_id = artist_new_id
+            console.log(`Created ${role} ${ first_name } ${ family_name } with person id ${ person_id }, artist id ${artist_new_id }` );  
+          }
+         
           await knex('artist_music').insert([
             {
               artist_id: artist_id,
@@ -125,28 +166,21 @@ exports.seed = async function(knex) {
       name_list = program.choreo.split(", ");
       for (const choreo of name_list) {
         const [first_name, family_name] = choreo.split(" ");
-    // TODO 4 CHECK if person table exit, dont duplicate, refactor logic of getChoreoId function
-        
-        // const result = await knex('choreographers')
-        //   .join('persons', 'persons.id', '=', 'choreographers.person_id')
-        //   .where({
-        //     'persons.first_name': first_name,
-        //     'persons.family_name': family_name
-        //   })
-        //   .select('choreographers.id')
-        //   .first();
-        // let choreographer_id = result ? result.id : null;
-        let choreographer_id = await getChoreoId(knex, first_name, family_name);
 
+        let person_id = await getPersonId(knex, choreo);
+        let choreographer_id = await getChoreoId(knex, choreo);
+        if (!person_id) {
+          const [{ id: choreo_person_id }] = await knex('persons').insert({ full_name: choreo, first_name: first_name, family_name: family_name}).returning('id');
+          person_id = choreo_person_id
+          console.log(`Created ${ choreo } with person id ${choreo_person_id }` ); 
+        } 
 
         if (!choreographer_id) {
-          const [{ id: choreo_person_id }] = await knex('persons').insert({ first_name: first_name, family_name: family_name}).returning('id');
-
-          const [{ id: choreo_id }] = await knex('choreographers').insert({ person_id: choreo_person_id}).returning('id');
-          console.log(`Created ${ first_name } ${ family_name } with person id ${choreo_person_id } and choreo id ${choreo_id }` ); 
+          const [{ id: choreo_id }] = await knex('choreographers').insert({ person_id: person_id}).returning('id');
+          console.log(`Created ${ choreo } from person id ${ person_id } and choreo id ${choreo_id }`);
           choreographer_id = choreo_id
         }
-
+        
         await knex('program_choreographer').insert([
           {
             program_id: program_id,
