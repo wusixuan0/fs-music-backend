@@ -38,6 +38,16 @@ async function getArtistId(knex, name) {
   return result ? result.id : null;
 }
 
+async function getMusicId(knex, music_title) {
+  const result = await knex('musics')
+    .select('id')
+    .where({
+      'title': music_title,
+    })
+    .first();
+  return result ? result.id : null;
+}
+
 exports.seed = async function(knex) {
   await knex('program_seasons').del()
   await knex('artist_music').del()
@@ -103,23 +113,62 @@ exports.seed = async function(knex) {
 
     // TODO 1: add iteration to musics
     const musics = program['musics'][0];
-    
-    // TODO 2: search if music exist, if not then create music
-    // TODO 3: add search artist, if not then create
-
-    // TODO 4 CHECK if person table exit, dont duplicate, refactor logic of getChoreoId function
-
-    // both exist -> skip to program_choreographer
-    // person id doesn't exist and choreo doesn't exist
-    // person id exist but choreo doesn't exist, like yuna
-
-
-    const music = {
-      title: musics.title,
-      additional_info: musics.additional_info
+    for (const musics in program['musics']) {
     }
-    const [{ id: music_id }] = await knex('musics').insert(music).returning('id');
-    console.log(`Created ${ musics.title } with music id ${music_id }` ); 
+    // TODO 2: 
+    // ignore repeated title for now
+    // challenge: music with same title but different, need to check artist too to confirm
+    // if title and artist are the same -> get music_id get skip musics.artists to choreo
+    // if title is the same, but not artist -> create new music
+    // if title is diff -> create new music
+    // challenge 2: multiple artists with different role from music
+
+
+    
+    let music_id = await getMusicId(knex, musics.title);
+
+    if (!music_id) {
+      const music = {
+        title: musics.title,
+        additional_info: musics.additional_info
+      }
+      const [{ id: new_music_id }] = await knex('musics').insert(music).returning('id');
+      music_id = new_music_id
+      console.log(`Created ${ musics.title } with music id ${music_id }` );
+      if (musics.artists) {
+        for (const role in musics.artists) {
+          name_list = musics.artists[role].split(", ");
+          for (const name of name_list) {
+            const { first_name, family_name } = parseName(name)
+
+            let person_id = await getPersonId(knex, name);
+            let artist_id = await getArtistId(knex, name);
+
+            if (!person_id) {
+              const [{ id: artist_person_id }] = await knex('persons').insert({ full_name: name, first_name: first_name, family_name: family_name}).returning('id');
+              person_id = artist_person_id
+              console.log(`Created ${ name } with person id ${ artist_person_id }` ); 
+            }
+
+            if (!artist_id) {
+              const [{ id: artist_new_id }] = await knex('artists').insert({ person_id: person_id}).returning('id');
+
+              artist_id = artist_new_id
+              console.log(`Created ${role} ${ first_name } ${ family_name } with person id ${ person_id }, artist id ${artist_new_id }` );  
+            }
+           
+            await knex('artist_music').insert([
+              {
+                artist_id: artist_id,
+                music_id: music_id,
+                role: role
+              },
+            ]);
+          }
+        }
+      }
+    }
+    
     
     await knex('program_music').insert([
       {
@@ -129,38 +178,7 @@ exports.seed = async function(knex) {
     ]);
 
 
-    if (musics.artists) {
-      for (const role in musics.artists) {
-        name_list = musics.artists[role].split(", ");
-        for (const name of name_list) {
-          const { first_name, family_name } = parseName(name)
-
-          let person_id = await getPersonId(knex, name);
-          let artist_id = await getArtistId(knex, name);
-
-          if (!person_id) {
-            const [{ id: artist_person_id }] = await knex('persons').insert({ full_name: name, first_name: first_name, family_name: family_name}).returning('id');
-            person_id = artist_person_id
-            console.log(`Created ${ name } with person id ${ artist_person_id }` ); 
-          }
-
-          if (!artist_id) {
-            const [{ id: artist_new_id }] = await knex('artists').insert({ person_id: person_id}).returning('id');
-
-            artist_id = artist_new_id
-            console.log(`Created ${role} ${ first_name } ${ family_name } with person id ${ person_id }, artist id ${artist_new_id }` );  
-          }
-         
-          await knex('artist_music').insert([
-            {
-              artist_id: artist_id,
-              music_id: music_id,
-              role: role
-            },
-          ]);
-        }
-      }
-    }
+  
 
     if (program.choreo) {
       name_list = program.choreo.split(", ");
