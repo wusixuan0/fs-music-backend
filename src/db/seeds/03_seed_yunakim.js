@@ -111,10 +111,63 @@ exports.seed = async function(knex) {
       },
     ]);
 
-    // TODO 1: add iteration to musics
-    const musics = program['musics'][0];
-    for (const musics in program['musics']) {
+
+    for (const musics of program['musics']) {
+
+      
+      let music_id = await getMusicId(knex, musics.title);
+
+      if (!music_id) {
+        const music = {
+          title: musics.title,
+          additional_info: musics.additional_info
+        }
+        const [{ id: new_music_id }] = await knex('musics').insert(music).returning('id');
+        music_id = new_music_id
+        console.log(`Created ${ musics.title } with music id ${music_id }` );
+        if (musics.artists) {
+          for (const role in musics.artists) {
+            name_list = musics.artists[role].split(", ");
+            for (const name of name_list) {
+              const { first_name, family_name } = parseName(name)
+
+              let person_id = await getPersonId(knex, name);
+              let artist_id = await getArtistId(knex, name);
+
+              if (!person_id) {
+                const [{ id: artist_person_id }] = await knex('persons').insert({ full_name: name, first_name: first_name, family_name: family_name}).returning('id');
+                person_id = artist_person_id
+                console.log(`Created ${ name } with person id ${ artist_person_id }` ); 
+              }
+
+              if (!artist_id) {
+                const [{ id: artist_new_id }] = await knex('artists').insert({ person_id: person_id}).returning('id');
+
+                artist_id = artist_new_id
+                console.log(`Created ${role} ${ first_name } ${ family_name } with person id ${ person_id }, artist id ${artist_new_id }` );  
+              }
+             
+              await knex('artist_music').insert([
+                {
+                  artist_id: artist_id,
+                  music_id: music_id,
+                  role: role
+                },
+              ]);
+            }
+          }
+        }
+      }
+      
+      
+      await knex('program_music').insert([
+        {
+          program_id: program_id,
+          music_id: music_id,
+        },
+      ]);
     }
+
     // TODO 2: 
     // ignore repeated title for now
     // challenge: music with same title but different, need to check artist too to confirm
@@ -124,58 +177,6 @@ exports.seed = async function(knex) {
     // challenge 2: multiple artists with different role from music
 
 
-    
-    let music_id = await getMusicId(knex, musics.title);
-
-    if (!music_id) {
-      const music = {
-        title: musics.title,
-        additional_info: musics.additional_info
-      }
-      const [{ id: new_music_id }] = await knex('musics').insert(music).returning('id');
-      music_id = new_music_id
-      console.log(`Created ${ musics.title } with music id ${music_id }` );
-      if (musics.artists) {
-        for (const role in musics.artists) {
-          name_list = musics.artists[role].split(", ");
-          for (const name of name_list) {
-            const { first_name, family_name } = parseName(name)
-
-            let person_id = await getPersonId(knex, name);
-            let artist_id = await getArtistId(knex, name);
-
-            if (!person_id) {
-              const [{ id: artist_person_id }] = await knex('persons').insert({ full_name: name, first_name: first_name, family_name: family_name}).returning('id');
-              person_id = artist_person_id
-              console.log(`Created ${ name } with person id ${ artist_person_id }` ); 
-            }
-
-            if (!artist_id) {
-              const [{ id: artist_new_id }] = await knex('artists').insert({ person_id: person_id}).returning('id');
-
-              artist_id = artist_new_id
-              console.log(`Created ${role} ${ first_name } ${ family_name } with person id ${ person_id }, artist id ${artist_new_id }` );  
-            }
-           
-            await knex('artist_music').insert([
-              {
-                artist_id: artist_id,
-                music_id: music_id,
-                role: role
-              },
-            ]);
-          }
-        }
-      }
-    }
-    
-    
-    await knex('program_music').insert([
-      {
-        program_id: program_id,
-        music_id: music_id,
-      },
-    ]);
 
 
   
