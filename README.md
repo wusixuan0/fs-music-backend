@@ -7,33 +7,44 @@ I aim to develop a comprehensive figure skating program music search database wi
 
 **data source**
 
-The database will utilize skater information from Wikipedia pages, which are updated regularly by volunteers.
+Wikipedia, ISU web archive ([example](https://web.archive.org/web/20100527225704/http://www.isuresults.com/bios/isufs00007232.htm))
+
+
+**TODO list**
+1. Write "Getting Started" section to set up and start using the project.
+2. Write [instructions](https://docs.google.com/document/d/1-Rf1M40dCZ2UMdzquOPsJGLgOZrtC7Zl7IXd4wa28AA/edit?usp=sharing) on how to set up Netlify with Express app
+
+**In progress**
+- fill database
+   - Develop a system to extract program music and artist/composer information from available sources.
+   - I extracted information from Yuna Kim's Wikipedia page on [google colab](https://colab.research.google.com/drive/1JsfrcGvLFjtNXaVA3U-dQWdBgWq6kOp7?usp=sharing)
+   - but it appears manual input is necessary due to differences in formatting on Wikipedia.
+
+- [remove redundancy in api logic](https://docs.google.com/document/d/1-Rf1M40dCZ2UMdzquOPsJGLgOZrtC7Zl7IXd4wa28AA/edit#bookmark=id.md4oxjjabvtl)
+- refactor urls in function/api.js(netlify), src/app.js, src/index.js(local)
+
+**tech stack**
+- Backend API: Node.js with Express.js, deploy with Netlify
+- Database: PostgreSQL
+- Frontend:
+
+**Getting Started**
+
+    npm install
+    npx knex migrate:make init --migrations-directory db/migrations
+    npm start
+
 
 [**Database Schema Design draft**](https://drive.google.com/file/d/1d1Zc450tY9FpdjUUSSOquNJlNDByyX5y/view?usp=sharing)
 
 <img src="https://imgur.com/UTah4Qa.png" alt="Alt Text" width="700"/>
 
 
-**directory structure**
+**API directory structure**
 
 <img src="https://i.imgur.com/0zHGdZs.png" alt="Alt Text" width="300"/>
 
-
-***TODO list***
-
-1. Choose tech stack
-    - Backend API: Node.js with Express.js, deploy with Heroku
-    - Database Management: PostgreSQL (use SQL for now, introduce GraphQL later)
-    - Frontend: React, deploy with Heroku
-2. Write "Getting Started" section on README.md to provide essential information to quickly understand, set up, and start using the project. 
-
-3. Develop a system to extract program music and artist/composer information from available sources. I attempted to extract information from Yuna Kim's Wikipedia page on [google colab](https://colab.research.google.com/drive/1JsfrcGvLFjtNXaVA3U-dQWdBgWq6kOp7?usp=sharing), but it appears manual input is necessary due to differences in formatting on Wikipedia.
-4. implement routes
-
-**Getting Started**
-
-npx knex migrate:make init --migrations-directory db/migrations
-____
+ 
 TODO future
 1. Implement a Search Function: Finally, implement a search function that will allow users to search for programs by music, artist/composer, and/or choreographer. You can use SQL queries to retrieve data from the database based on user input, and display results on a webpage or other interface.
 2. Implement auto-suggestion functionality for search queries to enhance user experience. [Tutorial](https://www.educative.io/module/lesson/building-infinite-list/N7EE2Nk5RyN)
