@@ -1,7 +1,7 @@
 module.exports = {
 
   development: {
-    client: 'postgresql',
+    client: 'pg',
     connection: {
       host: 'localhost',
       database: 'knex_tutorials' // TODO
