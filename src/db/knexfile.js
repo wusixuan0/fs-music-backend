@@ -4,7 +4,7 @@ module.exports = {
     client: 'pg',
     connection: {
       host: 'localhost',
-      database: 'knex_tutorials' // TODO
+      database: 'fs_program_db'
     },
     migrations: {
       tableName: 'knex_migrations'
