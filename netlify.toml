@@ -1,5 +1,5 @@
 [build]
-  functions = "functions"
+  command = "npm install"
 
-[dev]
-  functions = "functions"
+[functions]
+  directory = "functions"
