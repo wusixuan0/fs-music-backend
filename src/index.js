@@ -1,6 +1,6 @@
 const app = require('./app');
 
-const port = 3001;
-app.listen(port, () => {
+const port = process.env.PORT || 3000;
+app.listen(port, "0.0.0.0", () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
