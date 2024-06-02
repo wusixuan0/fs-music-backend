@@ -8,11 +8,12 @@ I aim to develop a comprehensive figure skating program music search database wi
 **data source**
 
 Wikipedia, ISU web archive ([example](https://web.archive.org/web/20100527225704/http://www.isuresults.com/bios/isufs00007232.htm))
+https://www.rinkresults.com/list-skaters
 
+[More notes](https://docs.google.com/document/d/1-Rf1M40dCZ2UMdzquOPsJGLgOZrtC7Zl7IXd4wa28AA/edit?usp=sharing)
 
 **TODO list**
-1. Write "Getting Started" section to set up and start using the project.
-2. Write [instructions](https://docs.google.com/document/d/1-Rf1M40dCZ2UMdzquOPsJGLgOZrtC7Zl7IXd4wa28AA/edit?usp=sharing) on how to set up Netlify with Express app
+- Write "Getting Started" section to set up and start using the project.
 
 **In progress**
 - fill database
@@ -21,11 +22,10 @@ Wikipedia, ISU web archive ([example](https://web.archive.org/web/20100527225704
    - but it appears manual input is necessary due to differences in formatting on Wikipedia.
 
 - [remove redundancy in api logic](https://docs.google.com/document/d/1-Rf1M40dCZ2UMdzquOPsJGLgOZrtC7Zl7IXd4wa28AA/edit#bookmark=id.md4oxjjabvtl)
-- refactor urls in function/api.js(netlify), src/app.js, src/index.js(local)
 
 **tech stack**
-- Backend API: Node.js with Express.js, deploy with Netlify
-- Database: PostgreSQL
+- Backend API: Node.js, Express.js, PostgreSQL, Railway
+- Database: PostgreSQL, Railway
 - Frontend:
 
 **Getting Started**
