@@ -4,7 +4,6 @@ exports.up = function(knex) {
       table.integer('program_id').references('programs.id').notNullable();
       table.integer('skater_id').references('skaters.id').notNullable();
       table.primary(['program_id', 'skater_id']);
-      table.string('discipline', 255); // men, women, pairs and ice dance
     })
 
     .createTable('program_choreographer', function(table) {
@@ -17,7 +16,7 @@ exports.up = function(knex) {
       table.integer('artist_id').references('artists.id').notNullable();
       table.integer('music_id').references('musics.id').notNullable();
       table.primary(['artist_id', 'music_id']);
-      table.string('role', 255); //composer, performed_by
+      // table.string('role', 255); //composer, performed_by
     })
 };
 

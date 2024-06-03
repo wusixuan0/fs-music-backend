@@ -15,7 +15,7 @@ ISU web archive ([example](https://web.archive.org/web/20100527225704/http://www
 
 ### Tech stack
 - Backend API (this repo): Node.js, Express.js, PostgreSQL, PostgreSQL, Railway
-- Frontend ([link](http://github.com/wusixuan0/fs-frontend)): javascript
+- Frontend ([link](http://github.com/wusixuan0/fs-frontend)): javascript, netlify
 
 ### Demo/Sample URL:
 
@@ -36,9 +36,9 @@ ISU web archive ([example](https://web.archive.org/web/20100527225704/http://www
 [more dev notes](https://docs.google.com/document/d/1-Rf1M40dCZ2UMdzquOPsJGLgOZrtC7Zl7IXd4wa28AA/edit?usp=sharing)
 
 
-### Database Schema Design [draft](https://drive.google.com/file/d/1d1Zc450tY9FpdjUUSSOquNJlNDByyX5y/view?usp=sharing)
+### Database Schema Design [link](https://drive.google.com/file/d/1d1Zc450tY9FpdjUUSSOquNJlNDByyX5y/view?usp=sharing)
 
-<img src="https://imgur.com/UTah4Qa.png" alt="Alt Text" width="700"/>
+<img src="https://i.imgur.com/5HnCoOA.png" alt="Alt Text" width="700"/>
 
 
 ### API directory structure

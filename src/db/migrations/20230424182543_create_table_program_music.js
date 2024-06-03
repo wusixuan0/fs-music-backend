@@ -3,11 +3,9 @@ exports.up = function(knex) {
     .createTable('musics', function(table) {
       table.increments('id').primary();
       table.string('title', 255).notNullable();
-      table.string('additional_info', 255);
     })
     .createTable('programs', function(table) {
       table.increments('id').primary();
-      table.string('program_title', 255).notNullable();
       table.string('program_type', 255).notNullable();
       table.integer('skater_id').references('skaters.id').notNullable();
     })
