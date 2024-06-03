@@ -3,11 +3,20 @@ const db = require('../db/db');
 class MusicDAO {
   async getAllMusicTitles() {
     const [titles] = await db('musics')
-      .select('id','title')
+      .select('id','title');
     return titles;
   }
 
   async getMusicPrograms(musicId) {
+    const music_title_result = await db('musics')
+      .select('title')
+      .where('musics.id', musicId)
+      .first();
+
+    if (!music_title_result) {
+      return {};
+    }
+
     const programs = await db('program_music')
       .join('programs', 'program_music.program_id', 'programs.id')
       .join('skaters', 'programs.skater_id', 'skaters.id')
@@ -29,7 +38,13 @@ class MusicDAO {
         'choreographers_persons.name AS choreographer_name'
       )
       .where('program_music.music_id', musicId)
-    return programs;
+    
+    const result = {
+      "music_title": music_title_result.title,
+      "programs":programs,
+    }
+
+    return result;
   }
 }
 
