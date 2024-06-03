@@ -16,7 +16,6 @@ exports.up = function(knex) {
       table.integer('artist_id').references('artists.id').notNullable();
       table.integer('music_id').references('musics.id').notNullable();
       table.primary(['artist_id', 'music_id']);
-      // table.string('role', 255); //composer, performed_by
     })
 };
 
