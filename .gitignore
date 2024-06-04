@@ -4,3 +4,12 @@ node_modules/
 src/db/seeds/json/*.json
 index.js
 .idea
+package-lock.json
+src/routes/person.js
+src/controller/person.js
+src/service/person.js
+src/dao/person.js
+src/routes/program.js
+src/controller/program.js
+src/service/program.js
+src/dao/program.js
