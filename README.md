@@ -23,7 +23,8 @@ ISU web archive ([example](https://web.archive.org/web/20100527225704/http://www
 - [refactor api logic](https://docs.google.com/document/d/1-Rf1M40dCZ2UMdzquOPsJGLgOZrtC7Zl7IXd4wa28AA/edit?usp=sharing)
 
 ### Getting Started
-create .env file and add DATABASE_URL from [railway](https://railway.app/new)
+Go to [railway](https://railway.app/new), without logging in, click `Start a New Project`, select `Deploy PostgreSQL`.
+Create .env file. Copy the link for DATABASE_URL found under Variables tab. Add DATABASE_URL to .env file.
 
     npm install
     npm run migrate

@@ -1,7 +1,7 @@
 exports.up = function(knex) {
   return knex.schema
     .createTable('countries', function(table) {
-      table.increments('id').primary();
+      table.string('ioc_code').notNullable().primary(); // IOC code as primary key
       table.string('name').notNullable();
     })
     .createTable('disciplines', function(table) {
@@ -11,7 +11,7 @@ exports.up = function(knex) {
     .createTable('persons', function(table) {
       table.increments('id').primary();
       table.string('name').notNullable();
-      table.integer('country_id').references('countries.id');
+      table.string('country_code').references('countries.ioc_code');
     })
     .createTable('skaters', function(table) {
       table.increments('id').primary();
