@@ -1,4 +1,5 @@
 # Figure Skating Program Music Database Project
+### Demo/Sample URL: [https://fskating.netlify.app/](https://fskating.netlify.app)
 ### Goal
 
 I aim to develop a comprehensive figure skating program music search database with easy search functionality for music, artist/composer, or choreographer, as well as a user input form for submission of new figure skating program music information to the database. 
@@ -11,17 +12,9 @@ For now, the basic version will feature an alphabetical list of music on the fro
 
 ISU web archive ([example](https://web.archive.org/web/20100527225704/http://www.isuresults.com/bios/isufs00007232.htm)), Wikipedia
 
-
-
 ### Tech stack
-- Backend API (this repo): Node.js, Express.js, PostgreSQL, PostgreSQL, Railway
-- Frontend ([link](http://github.com/wusixuan0/fs-frontend)): javascript, netlify
-
-### Demo/Sample URL:
-
-[index_page](https://fluffy-sunflower-e4e412.netlify.app)
-
-[item_page](https://fluffy-sunflower-e4e412.netlify.app/music_title)
+- Backend API (this repo): Node.js, Express.js, PostgreSQL, Railway
+- Frontend ([link](http://github.com/wusixuan0/fs-frontend)): Javascript, Netlify
 
 ### Work in Progress: TODO List
 - fill database
