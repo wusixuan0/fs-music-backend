@@ -25,7 +25,7 @@ class MusicDAO {
       .join('program_seasons', 'programs.id', 'program_seasons.program_id')
       .join('program_types', 'programs.program_type_id', 'program_types.id')
       .join('seasons', 'program_seasons.season_id', 'seasons.id')
-      .join('countries', 'persons.country_id', 'countries.id')
+      .join('countries', 'persons.country_code', 'countries.ioc_code')
       .leftJoin('program_choreographer', 'programs.id', 'program_choreographer.program_id')
       .leftJoin('choreographers', 'program_choreographer.choreographer_id', 'choreographers.id')
       .leftJoin('persons AS choreographers_persons', 'choreographers.person_id', 'choreographers_persons.id')

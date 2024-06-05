@@ -20,18 +20,32 @@ ISU web archive ([example](https://web.archive.org/web/20100527225704/http://www
 - fill database
    - Develop a system to extract program music and artist/composer information from available sources. I extracted information from Yuna Kim's Wikipedia page on [google colab](https://colab.research.google.com/drive/1JsfrcGvLFjtNXaVA3U-dQWdBgWq6kOp7?usp=sharing), but it appears manual input is necessary due to differences in formatting on Wikipedia.
 
-- [refactor api logic](https://docs.google.com/document/d/1-Rf1M40dCZ2UMdzquOPsJGLgOZrtC7Zl7IXd4wa28AA/edit?usp=sharing)
+- refactor api. [(more dev notes)](https://docs.google.com/document/d/1-Rf1M40dCZ2UMdzquOPsJGLgOZrtC7Zl7IXd4wa28AA/edit?usp=sharing)
+
 
 ### Getting Started
-Go to [railway](https://railway.app/new), without logging in, click `Start a New Project`, select `Deploy PostgreSQL`.
-Create .env file. Copy the link for DATABASE_URL found under Variables tab. Add DATABASE_URL to .env file.
 
     npm install
+
+    psql
+    CREATE DATABASE fs_program_db
+    \q
+
+    cd src/db
+    NODE_ENV=development knex migrate:latest
+    NODE_ENV=development knex seed:run --specific=01_seed_samples.js
+    cd ../..
+    NODE_ENV=development nodemon src/index.js
+
+or
+
+Go to [railway](https://railway.app/new),click `Start a New Project`, select `Deploy PostgreSQL`.
+
+Create .env file. Copy the link for DATABASE_URL found under Variables tab. Add DATABASE_URL to .env file.
+
     npm run migrate
     npm run seed
     npm start
-[more dev notes](https://docs.google.com/document/d/1-Rf1M40dCZ2UMdzquOPsJGLgOZrtC7Zl7IXd4wa28AA/edit?usp=sharing)
-
 
 ### Database Schema Design [link](https://drive.google.com/file/d/1d1Zc450tY9FpdjUUSSOquNJlNDByyX5y/view?usp=sharing)
 

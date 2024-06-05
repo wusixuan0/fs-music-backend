@@ -45,27 +45,27 @@ exports.seed = async function(knex) {
   ]);
   await knex('countries').insert([
     {
-      id: 1,
+      ioc_code: 'KOR',
       name: 'South Korea',
     },
     {
-      id: 2,
+      ioc_code: 'JPN',
       name: 'Japan',
     },
     {
-      id: 3,
+      ioc_code: 'USA',
       name: 'USA',
     },
     {
-      id: 4,
+      ioc_code: 'CAN',
       name: 'Canada',
     },
     {
-      id: 5,
+      ioc_code: 'RUS',
       name: 'Russia',
     },
     {
-      id: 6,
+      ioc_code: 'CHN',
       name: 'China',
     },
   ]);
@@ -93,42 +93,42 @@ exports.seed = async function(knex) {
     {
       id: 1, 
       name: 'Yuna Kim', 
-      country_id: 1,
+      country_code: 'KOR',
     },
     {
       id: 2, 
       name: 'Mao Asada', 
-      country_id: 2,
+      country_code: 'JPN',
     },
     {
       id: 3, 
       name: 'Michelle Kwan', 
-      country_id: 3,
+      country_code: 'USA',
     },
     {
       id: 4, 
       name: 'Meryl Davis / Charlie White', 
-      country_id: 3,
+      country_code: 'USA',
     },
     {
       id: 5,
       name: 'Tatiana Totmianina / Maxim Marinin', 
-      country_id: 5,
+      country_code: 'RUS',
     },
     {
       id: 6,
       name: 'David Wilson', 
-      country_id: 4,
+      country_code: 'CAN',
     },
     {
       id: 7,
       name: 'Tatiana Tarasova',
-      country_id: 5,
+      country_code: 'RUS',
     },
     {
       id: 8,
       name: 'Nikolai Rimsky-Korsakov', 
-      country_id: 5,
+      country_code: 'RUS',
     },
   ]);
 
