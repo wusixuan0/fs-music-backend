@@ -93,42 +93,34 @@ exports.seed = async function(knex) {
     {
       id: 1, 
       name: 'Yuna Kim', 
-      country_code: 'KOR',
     },
     {
       id: 2, 
       name: 'Mao Asada', 
-      country_code: 'JPN',
     },
     {
       id: 3, 
       name: 'Michelle Kwan', 
-      country_code: 'USA',
     },
     {
       id: 4, 
       name: 'Meryl Davis / Charlie White', 
-      country_code: 'USA',
     },
     {
       id: 5,
       name: 'Tatiana Totmianina / Maxim Marinin', 
-      country_code: 'RUS',
     },
     {
       id: 6,
       name: 'David Wilson', 
-      country_code: 'CAN',
     },
     {
       id: 7,
       name: 'Tatiana Tarasova',
-      country_code: 'RUS',
     },
     {
       id: 8,
       name: 'Nikolai Rimsky-Korsakov', 
-      country_code: 'RUS',
     },
   ]);
 
@@ -137,26 +129,31 @@ exports.seed = async function(knex) {
       id: 1, 
       person_id: 1,
       discipline_id: 1,
+      country_code: 'KOR',
     },
     {
       id: 2,
       person_id: 2,
       discipline_id: 1,
+      country_code: 'JPN',
     },
     {
       id: 3, 
       person_id: 3,
       discipline_id: 2,
+      country_code: 'USA',
     },
     {
       id: 4, 
       person_id: 4,
       discipline_id: 4,
+      country_code: 'USA',
     },
     {
       id: 5,
       person_id: 5,
       discipline_id: 3,
+      country_code: 'RUS',
     },
   ]);
 

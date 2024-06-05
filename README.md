@@ -31,10 +31,8 @@ ISU web archive ([example](https://web.archive.org/web/20100527225704/http://www
     CREATE DATABASE fs_program_db
     \q
 
-    cd src/db
-    NODE_ENV=development knex migrate:latest
-    NODE_ENV=development knex seed:run --specific=01_seed_samples.js
-    cd ../..
+    NODE_ENV=development knex migrate:latest --knexfile src/db/knexfile.js
+    NODE_ENV=development knex seed:run --knexfile src/db/knexfile.js --specific=01_seed_samples.js
     NODE_ENV=development nodemon src/index.js
 
 or
@@ -48,6 +46,20 @@ Create .env file. Copy the link for DATABASE_URL found under Variables tab. Add 
     npm start
 
 ### Database Schema Design [link](https://drive.google.com/file/d/1d1Zc450tY9FpdjUUSSOquNJlNDByyX5y/view?usp=sharing)
+
+note:
+
+Attribute name in Table persons includes single skaters, pairs and ice dance teams.
+
+Example:
+
+ID  name
+1   Wenjing Sui / Cong Han
+2   Gabriella Papadakis / Guillaume Cizeron
+3   Kaori Sakamoto
+
+ISU profile page uses the same type of identifier for both individual skaters and teams (e.g. isufs00000561). Therefore current design uses the persons table for all skaters and teams. In the future: Add a team identifier to the persons table
+
 
 <img src="https://i.imgur.com/zpRynWj.png" alt="Alt Text" width="700"/>
 

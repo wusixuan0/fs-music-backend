@@ -11,12 +11,12 @@ exports.up = function(knex) {
     .createTable('persons', function(table) {
       table.increments('id').primary();
       table.string('name').notNullable();
-      table.string('country_code').references('countries.ioc_code');
     })
     .createTable('skaters', function(table) {
       table.increments('id').primary();
       table.integer('person_id').references('persons.id').notNullable();
-      table.integer('discipline_id').references('disciplines.id');
+      table.integer('discipline_id').references('disciplines.id').notNullable();;
+      table.string('country_code').references('countries.ioc_code').notNullable();;
     })
     .createTable('choreographers', function(table) {
       table.increments('id').primary();
