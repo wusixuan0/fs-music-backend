@@ -10,6 +10,7 @@ class MusicDAO {
   async getMusicPrograms(musicId) {
     const music_title_result = await db('musics')
       .select('title')
+      .select('artist_info')
       .where('musics.id', musicId)
       .first();
 
@@ -41,6 +42,7 @@ class MusicDAO {
     
     const result = {
       "music_title": music_title_result.title,
+      "artist_info": music_title_result.artist_info,
       "programs":programs,
     }
 

@@ -22,16 +22,11 @@ exports.up = function(knex) {
       table.increments('id').primary();
       table.integer('person_id').references('persons.id').notNullable();
     })
-    .createTable('artists', function(table) {
-      table.increments('id').primary();
-      table.integer('person_id').references('persons.id').notNullable();
-    })
     
 };
 exports.down = function (knex) {
 
   return knex.schema
-    .dropTable('artists')
     .dropTable('choreographers')
     .dropTable('skaters')
     .dropTable('persons')
